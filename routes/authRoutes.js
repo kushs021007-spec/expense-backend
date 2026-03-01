@@ -56,12 +56,25 @@ router.post(
 
       await user.save();
 
+      console.log("Generated Password:", password);
+
       // Send email with password
       await transporter.sendMail({
+        from: `"Expense Management" <${process.env.EMAIL}>`,
         to: email,
-        subject: "Your Account Created",
-        text: `Your password is: ${password}`
-      });
+        subject: "Your Account Credentials",
+        text: `Hello ${name},
+
+    Your account has been created successfully.
+
+    Email: ${email}
+    Password: ${password}
+
+    Please login and change your password.
+
+    Regards,
+    Expense Team`
+    });
 
       res.json({ message: "User Created Successfully" });
 
