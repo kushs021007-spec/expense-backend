@@ -101,5 +101,20 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+router.post("/create-initial-cfo", async (req, res) => {
+  const bcrypt = (await import("bcryptjs")).default;
 
+  const hashed = await bcrypt.hash("12345678", 10);
+
+  const user = new User({
+    name: "Admin CFO",
+    email: "yourgmail@gmail.com",
+    password: hashed,
+    role: "cfo"
+  });
+
+  await user.save();
+
+  res.json({ message: "CFO created" });
+});
 export default router;
