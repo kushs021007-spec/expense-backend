@@ -117,16 +117,4 @@ router.post("/create-initial-cfo", async (req, res) => {
 
   res.json({ message: "CFO created" });
 });
-router.post("/reset-cfo-password", async (req, res) => {
-  const bcrypt = (await import("bcryptjs")).default;
-
-  const hashed = await bcrypt.hash("12345678", 10);
-
-  await User.updateOne(
-    { email: "kushs021007@gmail.com" },
-    { $set: { password: hashed } }
-  );
-
-  res.json({ message: "Password reset" });
-});
 export default router;
